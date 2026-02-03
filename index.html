@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Valentine?</title>
+
+  <style>
+    :root{
+      --bg1:#ffd6e7;
+      --bg2:#ffeef6;
+      --card:#ffffffee;
+      --text:#1b1b1f;
+      --muted:#6b6b75;
+      --yes:#ff2d6f;
+      --yesHover:#ff4a86;
+      --no:#ececf1;
+      --shadow:0 20px 60px rgba(0,0,0,.15);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      overflow:hidden;
+    }
+
+    .card{
+      width:min(720px,92vw);
+      background:var(--card);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:28px 22px 24px;
+      text-align:center;
+      position:relative;
+    }
+
+    /* Cute cat */
+    .cat{
+      width:76px;height:76px;
+      margin:0 auto 10px;
+      position:relative;
+    }
+    .cat::before{
+      content:"";
+      position:absolute; inset:0;
+      background:#f1b57d;
+      border-radius:50%;
+    }
+    .ear{
+      position:absolute; top:6px;
+      width:18px;height:18px;
+      background:#eaa566;
+      border-radius:4px;
+    }
+    .ear.left{ left:8px; transform:rotate(35deg); }
+    .ear.right{ right:8px; transform:rotate(-35deg); }
+    .eye{
+      position:absolute; top:34px;
+      width:8px;height:8px;
+      background:#111;
+      border-radius:50%;
+    }
+    .eye.left{ left:26px }
+    .eye.right{ right:26px }
+    .nose{
+      position:absolute;
+      top:44px; left:50%;
+      width:10px;height:10px;
+      background:#ff6aa0;
+      transform:translateX(-50%) rotate(45deg);
+      border-radius:2px;
+    }
+    .heart{
+      position:absolute;
+      top:-4px; right:-6px;
+      width:20px;height:20px;
+      background:#ff2d6f;
+      transform:rotate(45deg);
+      border-radius:4px;
+    }
+    .heart::before,.heart::after{
+      content:"";
+      position:absolute;
+      width:20px;height:20px;
+      background:#ff2d6f;
+      border-radius:50%;
+    }
+    .heart::before{ left:-10px }
+    .heart::after{ top:-10px }
+
+    h1{
+      font-size:clamp(22px,4vw,34px);
+      font-weight:800;
+      margin:10px 0;
+      color:var(--text);
+    }
+
+    .sub{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:16px;
+    }
+
+    .playArea{
+      position:relative;
+      width:min(560px,86vw);
+      height:160px;
+      margin:0 auto;
+    }
+
+    .btn{
+      position:absolute;
+      top:54px;
+      border:none;
+      padding:14px 24px;
+      border-radius:999px;
+      font-size:16px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 10px 20px rgba(0,0,0,.15);
+      user-select:none;
+    }
+
+    #yesBtn{
+      left:28%;
+      background:var(--yes);
+      color:white;
+    }
+    #yesBtn:hover{ background:var(--yesHover) }
+
+    #noBtn{
+      left:60%;
+      background:var(--no);
+      color:#111;
+    }
+
+    .note{
+      font-size:12.5px;
+      color:var(--muted);
+      margin-top:10px;
+    }
+
+    .result{
+      display:none;
+      margin-top:14px;
+    }
+    .result h2{
+      font-size:clamp(24px,4vw,36px);
+      margin-bottom:10px;
+    }
+    .result img{
+      width:min(420px,80vw);
+      border-radius:16px;
+      box-shadow:var(--shadow);
+    }
+
+    canvas{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:999;
+    }
+  </style>
+</head>
+
+<body>
+<canvas id="confetti"></canvas>
+
+<div class="card">
+  <div class="cat">
+    <div class="ear left"></div>
+    <div class="ear right"></div>
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="nose"></div>
+    <div class="heart"></div>
+  </div>
+
+  <h1>Hello will you be my valentine?</h1>
+  <p class="sub">Choose wisely 😌</p>
+
+  <div class="playArea" id="playArea">
+    <button class="btn" id="yesBtn">Yes</button>
+    <button class="btn" id="noBtn">No</button>
+  </div>
+
+  <div class="note" id="note">“No” seems a bit shy 😈</div>
+
+  <div class="result" id="result">
+    <h2>YAY! 🎉</h2>
+    <img src="https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif" alt="Yay">
+    <p class="sub">Text me: “Yes 💘”</p>
+  </div>
+</div>
+
+<script>
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const playArea = document.getElementById("playArea");
+  const result = document.getElementById("result");
+  const note = document.getElementById("note");
+
+  function moveNo(){
+    const area = playArea.getBoundingClientRect();
+    const btn = noBtn.getBoundingClientRect();
+    const x = Math.random()*(area.width-btn.width);
+    const y = Math.random()*(area.height-btn.height);
+    noBtn.style.left = x+"px";
+    noBtn.style.top = y+"px";
+    note.textContent = ["Almost 😅","Nope 😈","Try again 😂","Too slow 🏃‍♂️💨"][Math.floor(Math.random()*4)];
+  }
+
+  noBtn.addEventListener("mouseenter", moveNo);
+  noBtn.addEventListener("touchstart", e=>{e.preventDefault(); moveNo();},{passive:false});
+  noBtn.addEventListener("click", e=>{e.preventDefault(); moveNo();});
+
+  yesBtn.addEventListener("click", ()=>{
+    playArea.style.display="none";
+    note.style.display="none";
+    result.style.display="block";
+    confetti();
+  });
+
+  /* Confetti */
+  const canvas=document.getElementById("confetti");
+  const ctx=canvas.getContext("2d");
+  function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+  window.onresize=resize; resize();
+
+  function confetti(){
+    const pieces=[...Array(180)].map(()=>({
+      x:Math.random()*canvas.width,
+      y:-20,
+      vx:(Math.random()-.5)*3,
+      vy:2+Math.random()*3,
+      s:8+Math.random()*10,
+      c:["#ff2d6f","#ffd166","#06d6a0","#4cc9f0","#b5179e"][Math.floor(Math.random()*5)]
+    }));
+    let t=0;
+    function draw(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      pieces.forEach(p=>{
+        p.x+=p.vx; p.y+=p.vy; p.vy+=.02;
+        ctx.fillStyle=p.c;
+        ctx.fillRect(p.x,p.y,p.s,p.s*.6);
+      });
+      if(t++<200) requestAnimationFrame(draw);
+    }
+    draw();
+  }
+</script>
+</body>
+</html>
