@@ -41,7 +41,7 @@
       position:relative;
     }
 
-    /* Cute cat */
+    /* Cat */
     .cat{
       width:76px;height:76px;
       margin:0 auto 10px;
@@ -53,47 +53,17 @@
       background:#f1b57d;
       border-radius:50%;
     }
-    .ear{
-      position:absolute; top:6px;
-      width:18px;height:18px;
-      background:#eaa566;
-      border-radius:4px;
-    }
-    .ear.left{ left:8px; transform:rotate(35deg); }
-    .ear.right{ right:8px; transform:rotate(-35deg); }
-    .eye{
-      position:absolute; top:34px;
-      width:8px;height:8px;
-      background:#111;
-      border-radius:50%;
-    }
-    .eye.left{ left:26px }
-    .eye.right{ right:26px }
-    .nose{
-      position:absolute;
-      top:44px; left:50%;
-      width:10px;height:10px;
-      background:#ff6aa0;
-      transform:translateX(-50%) rotate(45deg);
-      border-radius:2px;
-    }
-    .heart{
-      position:absolute;
-      top:-4px; right:-6px;
-      width:20px;height:20px;
-      background:#ff2d6f;
-      transform:rotate(45deg);
-      border-radius:4px;
-    }
-    .heart::before,.heart::after{
-      content:"";
-      position:absolute;
-      width:20px;height:20px;
-      background:#ff2d6f;
-      border-radius:50%;
-    }
-    .heart::before{ left:-10px }
-    .heart::after{ top:-10px }
+    .ear{position:absolute;top:6px;width:18px;height:18px;background:#eaa566;border-radius:4px}
+    .ear.left{left:8px;transform:rotate(35deg)}
+    .ear.right{right:8px;transform:rotate(-35deg)}
+    .eye{position:absolute;top:34px;width:8px;height:8px;background:#111;border-radius:50%}
+    .eye.left{left:26px}
+    .eye.right{right:26px}
+    .nose{position:absolute;top:44px;left:50%;width:10px;height:10px;background:#ff6aa0;transform:translateX(-50%) rotate(45deg);border-radius:2px}
+    .heart{position:absolute;top:-4px;right:-6px;width:20px;height:20px;background:#ff2d6f;transform:rotate(45deg);border-radius:4px}
+    .heart::before,.heart::after{content:"";position:absolute;width:20px;height:20px;background:#ff2d6f;border-radius:50%}
+    .heart::before{left:-10px}
+    .heart::after{top:-10px}
 
     h1{
       font-size:clamp(22px,4vw,34px);
@@ -102,11 +72,7 @@
       color:var(--text);
     }
 
-    .sub{
-      font-size:13px;
-      color:var(--muted);
-      margin-bottom:16px;
-    }
+    .sub{font-size:13px;color:var(--muted);margin-bottom:16px}
 
     .playArea{
       position:relative;
@@ -128,36 +94,23 @@
       user-select:none;
     }
 
-    #yesBtn{
-      left:28%;
-      background:var(--yes);
-      color:white;
-    }
-    #yesBtn:hover{ background:var(--yesHover) }
+    #yesBtn{left:28%;background:var(--yes);color:white}
+    #yesBtn:hover{background:var(--yesHover)}
+    #noBtn{left:60%;background:var(--no);color:#111}
 
-    #noBtn{
-      left:60%;
-      background:var(--no);
-      color:#111;
-    }
-
-    .note{
-      font-size:12.5px;
-      color:var(--muted);
-      margin-top:10px;
-    }
+    .note{font-size:12.5px;color:var(--muted);margin-top:10px}
 
     .result{
       display:none;
-      margin-top:14px;
+      margin-top:16px;
     }
     .result h2{
       font-size:clamp(24px,4vw,36px);
-      margin-bottom:10px;
+      margin-bottom:12px;
     }
     .result img{
       width:min(420px,80vw);
-      border-radius:16px;
+      border-radius:18px;
       box-shadow:var(--shadow);
     }
 
@@ -195,8 +148,9 @@
 
   <div class="result" id="result">
     <h2>YAY! 🎉</h2>
-    <img src="https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif" alt="Yay">
-    <p class="sub">Text me: “Yes 💘”</p>
+    <!-- YOUR PHOTO -->
+    <img src="./yay.jpg" alt="YAY">
+    <p class="sub">Now you’re stuck with me ❤️</p>
   </div>
 </div>
 
